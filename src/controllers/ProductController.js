@@ -70,7 +70,10 @@ const getProducts = async (req, res) => {
 
 const getProductsCategory = async (req, res) => {
   try {
-    const getCategory = await Products.find({ category: req.params.category });
+    const getCategory = await Products.find({
+      category: req.params.category,
+    }).limit(5);
+
     if (getCategory.length === 0) {
       return res.status(500).json({
         success: false,
