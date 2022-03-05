@@ -53,38 +53,37 @@ const addProduct = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
+  const sort = "-createdAt";
+  const page = +req.query.page || 1;
+  const limit = +req.query.limit || 5;
+  const skip = (page - 1) * limit;
+  const total = await Products.countDocuments();
+  const totalCategory = await Products.countDocuments({
+    category: req.query.category,
+  });
   try {
-    const products = await Products.find();
-    return res.status(200).json({
-      success: true,
-      products,
-    });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      success: false,
-      message: "Server not found !!!",
-    });
-  }
-};
-
-const getProductsCategory = async (req, res) => {
-  try {
-    const getCategory = await Products.find({
-      category: req.params.category,
-    }).limit(5);
-
-    if (getCategory.length === 0) {
-      return res.status(500).json({
-        success: false,
-        message: "Not a products !",
+    if (!req.query.category || req.query.category === "All") {
+      const products = await Products.find().sort(sort).skip(skip).limit(limit);
+      return res.status(200).json({
+        success: true,
+        products,
+        type: "getAll",
+        totalPage: Math.ceil(total / limit),
+      });
+    } else {
+      const products = await Products.find({
+        category: req.query.category,
+      })
+        .sort(sort)
+        .skip(skip)
+        .limit(limit);
+      return res.status(200).json({
+        success: true,
+        products,
+        type: "getCategory",
+        totalPage: Math.ceil(totalCategory / limit),
       });
     }
-
-    return res.status(200).json({
-      success: true,
-      products: getCategory,
-    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -198,7 +197,6 @@ const getDescription = async (req, res) => {
 module.exports = {
   addProduct,
   getProducts,
-  getProductsCategory,
   deleteProducts,
   getProduct,
   getConfiguration,

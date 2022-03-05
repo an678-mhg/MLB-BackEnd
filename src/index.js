@@ -6,7 +6,6 @@ const adminRoute = require("./routes/AdminRoute");
 const productRoute = require("./routes/ProductRoute");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const path = require("path");
 require("dotenv").config();
 
 const app = express();

@@ -4,7 +4,6 @@ const checkAdmin = require("../middlewares/checkAdmin");
 const {
   addProduct,
   getProducts,
-  getProductsCategory,
   deleteProducts,
   getProduct,
   getConfiguration,
@@ -34,12 +33,6 @@ route.get("/:id", getProduct);
 // Mô tả: Xóa sản phẩm
 // Private
 route.delete("/:id", checkAdmin, deleteProducts);
-
-// GET
-// /api/product/:category
-// Mô tả: Lấy theo danh mục vd: Phone, Laptop, Watch, Tablet
-// Public
-route.get("/category/:category", getProductsCategory);
 
 // GET
 // /api/product/configuration/:productId

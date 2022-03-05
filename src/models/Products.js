@@ -8,11 +8,11 @@ const Product = new Schema(
       required: true,
     },
     newPrice: {
-      type: String,
+      type: Number,
       required: true,
     },
     oldPrice: {
-      type: String,
+      type: Number,
     },
     image: {
       type: Array,
