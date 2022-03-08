@@ -8,6 +8,7 @@ const {
   getProduct,
   getConfiguration,
   getDescription,
+  updateProduct,
 } = require("../controllers/ProductController");
 
 // POST
@@ -33,6 +34,12 @@ route.get("/:id", getProduct);
 // Mô tả: Xóa sản phẩm
 // Private
 route.delete("/:id", checkAdmin, deleteProducts);
+
+// PUT
+// /api/product/:id
+// Mô tả: Chỉnh sửa sản phẩm
+// Private
+route.put("/:id", checkAdmin, updateProduct);
 
 // GET
 // /api/product/configuration/:productId

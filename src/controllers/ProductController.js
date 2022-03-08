@@ -69,6 +69,7 @@ const getProducts = async (req, res) => {
         products,
         type: "getAll",
         totalPage: Math.ceil(total / limit),
+        totalProducts: total,
       });
     } else {
       const products = await Products.find({
@@ -194,6 +195,42 @@ const getDescription = async (req, res) => {
   }
 };
 
+const updateProduct = async (req, res) => {
+  try {
+    const update = await Products.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        name: req.body.name,
+        newPrice: req.body.newPrice,
+        oldPrice: req.body.oldPrice,
+        colors: req.body.colors,
+        memorys: req.body.memorys,
+        category: req.body.category,
+      }
+    );
+
+    await Description.findOneAndUpdate(
+      { productId: req.params.id },
+      {
+        contentHtml: req.body.contentHtml,
+        contentMarkdown: req.body.contentMarkdown,
+      }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Update product success !",
+      product: update,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server not found !!!",
+    });
+  }
+};
+
 module.exports = {
   addProduct,
   getProducts,
@@ -201,4 +238,5 @@ module.exports = {
   getProduct,
   getConfiguration,
   getDescription,
+  updateProduct,
 };
