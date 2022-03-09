@@ -4,6 +4,7 @@ const usersRoute = require("./routes/UsersRoute");
 const uploadRoute = require("./routes/UploadRoute");
 const adminRoute = require("./routes/AdminRoute");
 const productRoute = require("./routes/ProductRoute");
+const orderRoute = require("./routes/OrderRoute");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
@@ -37,6 +38,7 @@ app.use("/api/auth", usersRoute);
 app.use("/api/upload", uploadRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/product", productRoute);
+app.use("/api/order", orderRoute);
 
 const PORT = process.env.PORT || 5000;
 
