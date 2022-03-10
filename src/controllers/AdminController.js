@@ -1,12 +1,22 @@
 const Users = require("../models/Users");
 
 const getAllUsers = async (req, res) => {
+  const page = +req.query.page || 1;
+  const limit = +req.query.limit || 10;
+  const skip = (page - 1) * limit;
+  const total = await Users.countDocuments({ roleId: "user" });
+  const sort = "-createdAt";
   try {
-    const users = await Users.find({ roleId: "user" });
+    const users = await Users.find({ roleId: "user" })
+      .limit(limit)
+      .skip(skip)
+      .sort(sort);
 
     return res.json({
       success: true,
       users,
+      totalPage: Math.ceil(total / limit),
+      totalUsers: total,
     });
   } catch (error) {
     console.log(error);

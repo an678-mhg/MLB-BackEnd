@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/index",
+    "start": "node ./src/index",
+    "dev": "nodemon ./src/index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,7 +19,9 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.3",
-    "multer": "^1.4.4",
+    "multer": "^1.4.4"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.15"
   }
 }

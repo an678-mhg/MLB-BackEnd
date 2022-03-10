@@ -2,17 +2,19 @@ const Order = require("../models/Order");
 const OrderDetails = require("../models/OrderDetails");
 
 const getAllOrder = async (req, res) => {
-  const limit = +req.query.limt || 5;
+  const limit = +req.query.limt || 10;
   const page = +req.query.page || 1;
   const total = await Order.countDocuments();
   const skip = (page - 1) * limit;
+  const sort = "-createdAt";
 
   try {
-    const order = await Order.find().limit(limit).skip(skip);
+    const order = await Order.find().limit(limit).skip(skip).sort(sort);
     return res.json({
       success: true,
       order,
       totalPage: Math.ceil(total / limit),
+      totalOrder: total,
     });
   } catch (error) {
     console.log(error);
@@ -24,7 +26,6 @@ const getAllOrder = async (req, res) => {
 };
 
 const createOrder = async (req, res) => {
-  console.log(req.body);
   try {
     const newOrder = new Order({
       name: req.body.name,
@@ -36,6 +37,7 @@ const createOrder = async (req, res) => {
       payments: req.body.payments,
       isPaid: false,
       userId: req.userId,
+      note: req.body.note,
     });
 
     await newOrder.save();
@@ -62,13 +64,17 @@ const createOrder = async (req, res) => {
 
 const getMyOrder = async (req, res) => {
   const userId = req.userId;
-  const limit = +req.query.limt || 5;
+  const limit = +req.query.limt || 10;
   const page = +req.query.page || 1;
   const total = await Order.countDocuments({ userId });
   const skip = (page - 1) * limit;
+  const sort = "-createdAt";
 
   try {
-    const order = await Order.find({ userId }).limit(limit).skip(skip);
+    const order = await Order.find({ userId })
+      .limit(limit)
+      .skip(skip)
+      .sort(sort);
     return res.json({
       success: true,
       order,
