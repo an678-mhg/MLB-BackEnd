@@ -1,13 +1,15 @@
 const express = require("express");
 const mongosee = require("mongoose");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+require("dotenv").config();
+// Routes
 const usersRoute = require("./routes/UsersRoute");
 const uploadRoute = require("./routes/UploadRoute");
 const adminRoute = require("./routes/AdminRoute");
 const productRoute = require("./routes/ProductRoute");
 const orderRoute = require("./routes/OrderRoute");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-require("dotenv").config();
+const reviewRoute = require('./routes/ReviewRoute')
 
 const app = express();
 
@@ -39,6 +41,7 @@ app.use("/api/upload", uploadRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/product", productRoute);
 app.use("/api/order", orderRoute);
+app.use("/api/review", reviewRoute)
 
 const PORT = process.env.PORT || 5000;
 

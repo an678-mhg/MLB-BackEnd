@@ -142,10 +142,27 @@ const getOrderbyId = async (req, res) => {
   }
 };
 
+const editOderbyId = async (req, res) => {
+  try {
+    await Order.findOneAndUpdate({_id: req.body._id}, req.body)
+    return res.json({
+      success: true,
+      message: "Edit order success!"
+    })
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server not found!",
+    });
+  }
+}
+
 module.exports = {
   getAllOrder,
   createOrder,
   getMyOrder,
   deleteOrder,
   getOrderbyId,
+  editOderbyId
 };

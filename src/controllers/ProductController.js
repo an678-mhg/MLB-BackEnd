@@ -96,22 +96,10 @@ const getProducts = async (req, res) => {
 
 const deleteProducts = async (req, res) => {
   try {
-    const checkDelete = await Products.findOneAndDelete({ _id: req.params.id });
-    if (!checkDelete) {
-      return res.status(500).json({
-        success: false,
-        message: "Delete fail !!!",
-      });
-    }
-    const checkDeleteConfiguration = await Configuration.findOneAndDelete({
+    await Products.findOneAndDelete({ _id: req.params.id });
+    await Configuration.findOneAndDelete({
       productId: req.params.id,
     });
-    if (!checkDeleteConfiguration) {
-      return res.status(500).json({
-        success: false,
-        message: "Delete fail !!!",
-      });
-    }
     return res.status(200).json({
       success: true,
       message: "Delete success !!!",

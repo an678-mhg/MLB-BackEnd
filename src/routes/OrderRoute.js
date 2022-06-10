@@ -8,6 +8,7 @@ const {
   getMyOrder,
   getOrderbyId,
   deleteOrder,
+  editOderbyId
 } = require("../controllers/OrderController");
 
 // GET
@@ -39,5 +40,7 @@ route.delete("/:id", checkAdmin, deleteOrder);
 // lấy về chi tiết đơn hàng
 // Private token user
 route.get("/:id", checkLogin, getOrderbyId);
+
+route.put('/', checkAdmin, editOderbyId)
 
 module.exports = route;
