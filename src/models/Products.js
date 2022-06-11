@@ -34,6 +34,9 @@ const Product = new Schema(
       type: String,
       required: true,
     },
+    vat: {
+      type: Number,
+    },
   },
   {
     timestamps: true,
