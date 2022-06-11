@@ -83,7 +83,9 @@ const updateUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const userInfo = await Users.findOne({ _id: req.params.id });
+    const userInfo = await Users.findOne({ _id: req.params.id }).select(
+      "-password"
+    );
     if (userInfo) {
       return res.json({
         success: true,

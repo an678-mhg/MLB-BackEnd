@@ -30,5 +30,5 @@ route.put("/users", checkAdmin, updateUsers);
 // /api/admin/user
 // Lấy users info
 // Private
-route.get("/user/:id", checkAdmin, getUser);
+route.get("/user/:id", getUser);
 module.exports = route;

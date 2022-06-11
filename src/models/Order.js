@@ -38,6 +38,7 @@ const Order = new Schema(
     },
     payments: {
       type: String,
+      emum: ["Ship COD", "Bank card"],
       required: true,
     },
     isPaid: {
