@@ -9,6 +9,7 @@ const {
   getConfiguration,
   getDescription,
   updateProduct,
+  searchProduct,
 } = require("../controllers/ProductController");
 
 // POST
@@ -49,5 +50,7 @@ route.get("/configuration/:productId", getConfiguration);
 // GET
 // /api/product/description/:productId
 route.get("/description/:productId", getDescription);
+
+route.get("/search/find", searchProduct);
 
 module.exports = route;
